@@ -187,20 +187,9 @@ namespace MatrixAlgebraForDoubles
             return result;
         }
 
-        public double Determinant2x2()
-        {
-            if (this.columns != 2 && this.rows != 2)
-                throw new ArgumentException("this method is for 2x2 matrixes only");
 
-            double a = this[0, 0];
-            double b = this[0, 1];
-            double c = this[1, 0];
-            double d = this[1, 1];
 
-            dynamic det = a * d - b * c;
 
-            return det;
-        }
 
         public double Determinant()
         {
@@ -213,7 +202,7 @@ namespace MatrixAlgebraForDoubles
             }
             else if (size1 == 2 && size2 == 2)
             {
-                return this.Determinant2x2();
+                return Helpers.Determinant2x2(this);
             }
             else
             {
@@ -320,6 +309,51 @@ namespace MatrixAlgebraForDoubles
             public static float FloatRandom(float min, float max, Random rand)
             {
                 return (float)rand.NextDouble() * (max - min) + min;
+            }
+
+            public static double Determinant2x2(Matrix matrix)
+            {
+                if (matrix.columns != 2 && matrix.rows != 2)
+                    throw new ArgumentException("this method is for 2x2 matrixes only");
+
+                double a = matrix[0, 0];
+                double b = matrix[0, 1];
+                double c = matrix[1, 0];
+                double d = matrix[1, 1];
+
+                dynamic det = a * d - b * c;
+
+                return det;
+            }
+
+            public static double[,] GetSubmatrix(double[,] matrix, int n, int row, int col)
+            {
+                double[,] submatrix = new double[n - 1, n - 1];
+
+                int subi = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (i == row)
+                    {
+                        continue;
+                    }
+
+                    int subj = 0;
+                    for (int j = 0; j < n; j++)
+                    {
+                        if (j == col)
+                        {
+                            continue;
+                        }
+
+                        submatrix[subi, subj] = matrix[i, j];
+                        subj++;
+                    }
+
+                    subi++;
+                }
+
+                return submatrix;
             }
 
         }
