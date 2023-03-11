@@ -132,6 +132,24 @@ namespace MatrixAlgebraForDoubles
             return result;
         }
 
+        public static Matrix operator -(Matrix left, Matrix right)
+        {
+            if (left.columns != right.columns || left.rows != right.rows)
+                throw new ArgumentException("Numbers of columns and rows must be the same in both matrixes");
+
+            Matrix result = new Matrix(left.rows, left.columns);
+
+            for (int i = 0; i < left.columns; i++)
+            {
+                for (int k = 0; k < left.rows; k++)
+                {
+                    result[i, k] = left[i, k] - right[i, k];
+                }
+            }
+
+            return result;
+        }
+
         public static Matrix operator - (Matrix left, dynamic value)
         {
             Matrix result = new Matrix(left.rows, left.columns);
@@ -152,7 +170,25 @@ namespace MatrixAlgebraForDoubles
 
         #endregion
 
+        #region FUNCTIONS
 
+        public Matrix transpose()
+        {
+            Matrix result = new Matrix(this.rows, this.columns);
+
+            for (int i = 0; i < result.columns; i++)
+            {
+                for (int k = 0; k < result.rows; k++)
+                {
+                    result[i, k] = this[this.rows - i - 1, this.columns - k - 1];
+                }
+            }
+
+            return result;
+        }
+
+
+        #endregion
 
 
 
