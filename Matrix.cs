@@ -187,7 +187,38 @@ namespace MatrixAlgebraForDoubles
             return result;
         }
 
+        public Matrix GetInverseMatrix()
+        {
+            if (this.rows != this.columns)
+                throw new ArgumentException("This Matrix is not a square matrix and its impossible to get Inverse matrix of it");
 
+
+            int n = this.rows;
+
+            double det = this.Determinant();
+;
+            if (det == 0)
+            {
+                throw new ArgumentException("The matrix is singular and does not have an inverse.");
+            }
+
+            Matrix inverse = new Matrix(n,n);
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Matrix submatrix = Helpers.GetSubmatrix(this, n, i, j);
+                    double subdet = submatrix.Determinant();
+                    double inverseValue = Math.Pow(-1, i + j) * subdet / det;
+                    if (inverseValue == -0) inverseValue = 0;
+
+                    inverse[j, i] = inverseValue;
+                }
+            }
+
+            return inverse;
+        }
 
 
 
@@ -326,9 +357,9 @@ namespace MatrixAlgebraForDoubles
                 return det;
             }
 
-            public static double[,] GetSubmatrix(double[,] matrix, int n, int row, int col)
+            public static Matrix GetSubmatrix(Matrix matrix, int n, int row, int col)
             {
-                double[,] submatrix = new double[n - 1, n - 1];
+                Matrix submatrix = new Matrix(n - 1, n - 1);
 
                 int subi = 0;
                 for (int i = 0; i < n; i++)
