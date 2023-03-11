@@ -116,6 +116,38 @@ namespace MatrixAlgebraForDoubles
             return result;
         }
 
+        public static Matrix operator +(Matrix left, dynamic value)
+        {
+
+            Matrix result = new Matrix(left.rows, left.columns);
+
+            for (int i = 0; i < left.columns; i++)
+            {
+                for (int k = 0; k < left.rows; k++)
+                {
+                    result[i, k] = left[i, k] + value;
+                }
+            }
+
+            return result;
+        }
+
+        public static Matrix operator - (Matrix left, dynamic value)
+        {
+            Matrix result = new Matrix(left.rows, left.columns);
+
+            for(int i=0; i< left.columns; i++)
+            {
+                for (int k = 0; k < left.rows; k++)
+                {
+                    result = left[i, k] - value;
+                }
+            }
+
+            return result;
+
+        }
+
 
 
         #endregion
