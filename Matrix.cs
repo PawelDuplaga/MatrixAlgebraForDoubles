@@ -276,6 +276,7 @@ namespace MatrixAlgebraForDoubles
                 
                     dynamic randomValue = default(double);
                     randomValue = Helpers.DoubleRandom((double)min, (double)max, rand);
+                    this[i,k] = randomValue;
                 }
             }
         }
