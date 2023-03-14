@@ -12,9 +12,11 @@
 **
 =============================================================================*/
 
+using System.Collections;
+
 namespace MatrixAlgebraForDoubles
 {
-    public class Matrix
+    public class Matrix : IEnumerable<double>
     {
         double[,] data;
         public int rows; //rows
@@ -322,9 +324,35 @@ namespace MatrixAlgebraForDoubles
             }
         }
 
-        public Matrix Clone()
+        public Matrix Copy()
         {
-            return (Matrix)this.MemberwiseClone();
+            Matrix result = new Matrix(this.rows, this.columns);
+
+            for (int i = 0; i < result.columns; i++)
+            {
+                for (int k = 0; k < result.rows; k++)
+                {
+                    result[i, k] = this[i,k];
+                }
+            }
+
+            return result;
+        }
+
+        public IEnumerator<double> GetEnumerator()
+        {
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                for (int j = 0; j < data.GetLength(1); j++)
+                {
+                    yield return data[i, j];
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
 
